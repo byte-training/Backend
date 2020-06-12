@@ -132,6 +132,8 @@ public class AccountController {
         this.greetingsService = greetingsService;
     }
 
+    public int entityNumber = 0;
+
     @GetMapping
     public ResponseEntity<ArrayList> getUser(){
         ArrayList user = greetingsService.getUser();
@@ -153,7 +155,8 @@ public class AccountController {
 
     @PostMapping("/crear")
     public @ResponseBody ResponseEntity<GreetingsResponseText> createUser(@RequestBody User user) {
-        greetingsService.createUser(user.getId(),user.getIdentification(), user.getName(), user.getLastname(),user.getBirthdate());
+        this.entityNumber += 1;
+        greetingsService.createUser(this.entityNumber,user.getIdentification(), user.getName(), user.getLastname(),user.getBirthdate());
         GreetingsResponseText response = new GreetingsResponseText();
         response.setResponse("Created");
         response.setMessage("Usuario creado correctamente");
