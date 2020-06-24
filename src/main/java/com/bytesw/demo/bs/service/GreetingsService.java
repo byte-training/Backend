@@ -1,6 +1,8 @@
 package com.bytesw.demo.bs.service;
 
 import com.bytesw.demo.bs.eis.bo.User;
+import com.bytesw.demo.bs.eis.bto.GreetingsResponse;
+import com.bytesw.demo.bs.eis.bto.GreetingsResponseText;
 
 import java.util.ArrayList;
 
@@ -8,11 +10,11 @@ public interface GreetingsService {
 
     ArrayList getUser();
 
-    User getUserById(int id);
+    GreetingsResponse getUserById(int id);
 
-    void createUser(int id,String identificacion, String name, String lastname, String birthdate);
+    GreetingsResponseText createUser(int id,String identificacion, String name, String lastname, String birthdate);
 
-    void updateUser(int id,String identificacion, String name, String lastname, String birthdate);
+    GreetingsResponseText updateUser(int id,String identificacion, String name, String lastname, String birthdate);
 
-    void deleteUser(int id);
+    GreetingsResponseText deleteUser(int id);
 }

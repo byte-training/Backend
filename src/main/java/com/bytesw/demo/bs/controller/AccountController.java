@@ -143,12 +143,7 @@ public class AccountController {
 
     @GetMapping("/buscar")
     public ResponseEntity<GreetingsResponse> getUserById(@RequestParam("id") int id) {
-        User user = greetingsService.getUserById(id);
-        GreetingsResponse response = new GreetingsResponse();
-        response.setIdentification(user.getIdentification());
-        response.setName(user.getName());
-        response.setLastname(user.getLastname());
-        response.setBirthdate(user.getBirthdate());
+        GreetingsResponse response = greetingsService.getUserById(id);
         ResponseEntity<GreetingsResponse> result = new ResponseEntity<GreetingsResponse>(response, HttpStatus.OK);
         return result;
     }
@@ -156,20 +151,14 @@ public class AccountController {
     @PostMapping("/crear")
     public @ResponseBody ResponseEntity<GreetingsResponseText> createUser(@RequestBody User user) {
         this.entityNumber += 1;
-        greetingsService.createUser(this.entityNumber,user.getIdentification(), user.getName(), user.getLastname(),user.getBirthdate());
-        GreetingsResponseText response = new GreetingsResponseText();
-        response.setResponse("Created");
-        response.setMessage("Usuario creado correctamente");
+        GreetingsResponseText response = greetingsService.createUser(this.entityNumber,user.getIdentification(), user.getName(), user.getLastname(),user.getBirthdate());
         ResponseEntity<GreetingsResponseText> result = new ResponseEntity<GreetingsResponseText>(response, HttpStatus.OK);
         return result;
     }
 
     @PutMapping("/update")
     public @ResponseBody ResponseEntity<GreetingsResponseText> updateUser(@RequestBody User user) {
-        greetingsService.updateUser(user.getId(),user.getIdentification(), user.getName(), user.getLastname(),user.getBirthdate());
-        GreetingsResponseText response = new GreetingsResponseText();
-        response.setResponse("Updated");
-        response.setMessage("Usuario actualizado correctamente");
+        GreetingsResponseText response = greetingsService.updateUser(user.getId(),user.getIdentification(), user.getName(), user.getLastname(),user.getBirthdate());
         ResponseEntity<GreetingsResponseText> result = new ResponseEntity<GreetingsResponseText>(response, HttpStatus.OK);
         return result;
     }
@@ -177,10 +166,7 @@ public class AccountController {
 
     @DeleteMapping("/delete")
     public @ResponseBody ResponseEntity<GreetingsResponseText> deleteUser(@RequestParam("id") int id){
-        greetingsService.deleteUser(id);
-        GreetingsResponseText response = new GreetingsResponseText();
-        response.setResponse("Deleted");
-        response.setMessage("Usuario eleminado correctamente");
+        GreetingsResponseText response = greetingsService.deleteUser(id);
         ResponseEntity<GreetingsResponseText> result = new ResponseEntity<GreetingsResponseText>(response, HttpStatus.OK);
         return result;
     }

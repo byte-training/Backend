@@ -4,6 +4,8 @@ import com.bytesw.demo.bs.dao.UserRepository;
 import com.bytesw.demo.bs.eis.bo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.bytesw.demo.bs.eis.bto.GreetingsResponse;
+import com.bytesw.demo.bs.eis.bto.GreetingsResponseText;
 
 import java.util.ArrayList;
 
@@ -25,13 +27,18 @@ public class GreetingsServiceImpl implements GreetingsService{
     }
 
     @Override
-    public User getUserById(int id) {
+    public GreetingsResponse getUserById(int id) {
         User user = this.userRepository.findOne(id);
-        return user;
+        GreetingsResponse response = new GreetingsResponse();
+        response.setIdentification(user.getIdentification());
+        response.setName(user.getName());
+        response.setLastname(user.getLastname());
+        response.setBirthdate(user.getBirthdate());
+        return response;
     }
 
     @Override
-    public void createUser(int id,String identificacion, String name, String lastname, String birthdate) {
+    public GreetingsResponseText createUser(int id,String identificacion, String name, String lastname, String birthdate) {
         User user = new User();
         user.setId(id);
         user.setIdentification(identificacion);
@@ -39,10 +46,15 @@ public class GreetingsServiceImpl implements GreetingsService{
         user.setLastname(lastname);
         user.setBirthdate(birthdate);
         userRepository.save(user);
+        GreetingsResponseText response = new GreetingsResponseText();
+        response.setResponse("Created");
+        response.setMessage("Usuario creado correctamente");
+
+        return response;
     }
 
     @Override
-    public void updateUser(int id, String identificacion, String name, String lastname, String birthdate) {
+    public GreetingsResponseText updateUser(int id, String identificacion, String name, String lastname, String birthdate) {
         User user = userRepository.findOne(id);
         // crush the variables of the object found
         user.setIdentification(identificacion);
@@ -50,10 +62,20 @@ public class GreetingsServiceImpl implements GreetingsService{
         user.setLastname(lastname);
         user.setBirthdate(birthdate);
         userRepository.save(user);
+        GreetingsResponseText response = new GreetingsResponseText();
+        response.setResponse("Updated");
+        response.setMessage("Usuario actualizado correctamente");
+
+        return response;
     }
 
     @Override
-    public void deleteUser(int id) {
+    public GreetingsResponseText deleteUser(int id) {
         this.userRepository.delete(id);
+        GreetingsResponseText response = new GreetingsResponseText();
+        response.setResponse("Deleted");
+        response.setMessage("Usuario eleminado correctamente");
+
+        return response;
     }
 }
